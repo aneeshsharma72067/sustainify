@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --light-color: #ececec;
+  --dark-color: #222;
+}
+body {
+  background: var(--light-color);
+  color: var(--dark-color);
+}
+
+::-webkit-scrollbar {
+  width: 14px;
+}
+
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #08ad16;
+  border-radius: 1rem;
+  border: 1px solid white;
+}
+
+a {
+  color: #222;
+  text-decoration: inherit;
+  transition: all 0.3s;
+}
+
+.navbar__link {
+  @apply duration-300 relative hover:text-green-400 after:content-[''] after:absolute after:w-2 after:h-2 after:rounded-full after:bg-green-400 after:-bottom-2 after:left-1/2 after:duration-300 after:opacity-0;
+}
+
+.active__navbar__link {
+  @apply after:opacity-100;
+}
+
+.category_list_item {
+  @apply bg-white text-slate-800 py-2 px-5 w-full duration-300 hover:bg-zinc-300 cursor-pointer select-none;
+}
+
+.loader {
+  width: 70px;
+  aspect-ratio: 1;
+  display: grid;
+  border: 4px solid #0000;
+  border-radius: 50%;
+  border-right-color: #25b09b;
+  animation: l15 1s infinite linear;
+}
+.loader::before,
+.loader::after {
+  content: "";
+  grid-area: 1/1;
+  margin: 2px;
+  border: inherit;
+  border-radius: 50%;
+  animation: l15 2s infinite;
+}
+.loader::after {
+  margin: 8px;
+  animation-duration: 3s;
+}
+@keyframes l15 {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+.success_toast {
+  background: #bbffc4;
+  color: #15b915;
+  border-color: #15b915;
+}
+.error_toast {
+  background: #ffbbbb;
+  color: #ff1d1d;
+  border-color: #ff1d1d;
+}
+.toast {
+  overflow: hidden;
+}
+.toast > span {
+  font-size: 1rem;
+  z-index: 5;
+}
+.toast::before {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  animation: clock 3s ease-in-out;
+}
+.success_toast::before {
+  background: #65ff7a;
+}
+
+.error_toast::before {
+  background: #ff8080;
+}
+
+@keyframes clock {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
