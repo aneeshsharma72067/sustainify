@@ -125,3 +125,8 @@ a {
     transform: translateX(100%);
   }
 }
+
+.neuromorphism {
+  background: #ffffff;
+  box-shadow: 11px 11px 22px #c9c9c9, -11px -11px 22px #ffffff;
+}

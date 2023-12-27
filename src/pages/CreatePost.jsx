@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { DropDownIcon } from "../assets/Icons";
 import Button from "../components/Button";
-import { useFirebase } from "../context/firebase";
+import { useFirebase } from "../context/FirebaseContext";
 import Loader from "../components/Loader";
 import { categoryList } from "../constants/data";
 import Toast from "../components/Toast";
 
 export default function CreatePost() {
   const [isLoading, setIsLoading] = useState(false);
-  const [isToastActive, setIsToastActive] = useState(false);
+  const [toast, setToast] = useState({
+    isActive: false,
+    message: null,
+    status: null,
+  });
   const [formData, setFormData] = useState({
     userId: 1,
     username: "john123",
@@ -19,10 +23,10 @@ export default function CreatePost() {
   const onValueChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
   };
-  const showTost = (message) => {
-    setIsToastActive(true);
+  const showTost = (message, status) => {
+    setToast({ message: message, status: status, isActive: true });
     setTimeout(() => {
-      setIsToastActive(false);
+      setToast({ message: null, status: null, isActive: false });
     }, 3000);
   };
   const [isCategoryListActive, setIsCategoryListActive] = useState(false);
@@ -31,26 +35,37 @@ export default function CreatePost() {
   const showCategoryList = () => {
     setIsCategoryListActive(!isCategoryListActive);
   };
-
+  const resetArticle = () => {
+    setFormData({
+      userId: 1,
+      username: "john123",
+      category: "",
+      title: "",
+      content: "",
+    });
+  };
   const postArticle = async () => {
     setIsLoading(true);
     if (formData.content.length < 100) {
       return;
     }
-    const result = await firebase.addArticle(formData);
-    if (result) {
-      showTost();
+    try {
+      const result = await firebase.addArticle(formData);
+      console.log(result);
+      resetArticle();
+      showTost("Article submitted successfully", "success");
       console.log("data added successfully");
-    } else {
-      console.log("Error");
+      setIsLoading(false);
+    } catch (err) {
+      setIsLoading(false);
+      showTost("Something Went Wrong !!", "error");
     }
-    setIsLoading(false);
   };
   return (
     <div className="">
       {isLoading && <Loader />}
-      {isToastActive && (
-        <Toast message={"Article submitted successfully"} status={"success"} />
+      {toast.isActive && (
+        <Toast message={toast.message} status={toast.status} />
       )}
       <div className="flex flex-col w-4/5 mx-auto py-4 gap-3 text-slate-800">
         <h1 className="text-3xl text-center font-bold my-4 text-green-500">
@@ -76,13 +91,16 @@ export default function CreatePost() {
             </span>
           </div>
           {isCategoryListActive && (
-            <div className="absolute duration-300 max-h-40 overflow-y-scroll top-14 flex flex-col rounded-md w-full border-2 border-green-300">
+            <div className="absolute duration-300 max-h-40 overflow-y-scroll top-14 flex flex-col rounded-md w-full border-4 border-zinc-300">
               {categoryList.map((category) => {
                 return (
                   <div
                     className="category_list_item"
                     key={category.id}
-                    onClick={() => onValueChange("category", category.title)}
+                    onClick={() => {
+                      onValueChange("category", category.title);
+                      setIsCategoryListActive(false);
+                    }}
                   >
                     {category.title}
                   </div>
@@ -113,6 +131,9 @@ export default function CreatePost() {
             value={formData.content}
             onChange={(e) => {
               onValueChange(e.target.name, e.target.value);
+            }}
+            onFocus={() => {
+              setIsCategoryListActive(false);
             }}
           ></textarea>
         </div>
