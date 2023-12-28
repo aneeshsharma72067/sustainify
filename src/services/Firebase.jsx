@@ -6,6 +6,8 @@ import {
   getFirestore,
   serverTimestamp,
 } from "firebase/firestore";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { v4 as uuid4 } from "uuid";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCeCiujs2TwwPw6GHBhsmA5NATqtzk_wqo",
@@ -18,6 +20,7 @@ const firebaseConfig = {
 // Firebase Services
 const firebaseApp = initializeApp(firebaseConfig);
 const firestore = getFirestore();
+const storage = getStorage(firebaseApp);
 
 const addArticle = async (formData) => {
   const result = await addDoc(collection(firestore, "articles"), {
@@ -37,4 +40,28 @@ const getArticles = async () => {
   return articlesList;
 };
 
-export { addArticle, getArticles };
+const addAlertPost = async (userID, username, image, caption) => {
+  const storageRef = ref(storage, `post_images/${uuid4()}_${image.name}`);
+  const imageSnapshot = await uploadBytes(storageRef, image);
+  const imageURL = await getDownloadURL(imageSnapshot.ref);
+
+  const result = await addDoc(collection(firestore, "posts"), {
+    userID: userID,
+    username: username,
+    imageURL: imageURL,
+    caption: caption,
+    createdAt: serverTimestamp(),
+  });
+  return result;
+};
+
+const getPosts = async () => {
+  const postsSnapshot = await getDocs(collection(firestore, "posts"));
+  const postList = [];
+  postsSnapshot.forEach((post) => {
+    postList.push({ id: post.id, ...post.data() });
+  });
+  return postList;
+};
+
+export { addArticle, getArticles, addAlertPost, getPosts };

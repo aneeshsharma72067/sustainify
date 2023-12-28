@@ -5,8 +5,9 @@ import { useFirebase } from "../context/FirebaseContext";
 import Loader from "../components/Loader";
 import { categoryList } from "../constants/data";
 import Toast from "../components/Toast";
+import { addArticle } from "../services/Firebase";
 
-export default function CreatePost() {
+export default function CreateArticle() {
   const [isLoading, setIsLoading] = useState(false);
   const [toast, setToast] = useState({
     isActive: false,
@@ -50,7 +51,7 @@ export default function CreatePost() {
       return;
     }
     try {
-      const result = await firebase.addArticle(formData);
+      const result = await addArticle(formData);
       console.log(result);
       resetArticle();
       showTost("Article submitted successfully", "success");

@@ -2,10 +2,18 @@ import React, { useEffect } from "react";
 import UserGreet from "../components/UserGreet";
 import Article from "../components/Article";
 import { useFirebase } from "../context/FirebaseContext";
-import ArticleSkeleton from "../components/ArticleSkeleton";
+import ArticleSkeletonLoader from "../components/ArticleSkeletonLoader";
+import { getArticles } from "../services/Firebase";
 
 export default function Home() {
-  const { articles } = useFirebase();
+  const { articles, setArticles } = useFirebase();
+  useEffect(() => {
+    const fetchArticles = async () => {
+      const articleList = await getArticles();
+      setArticles(articleList);
+    };
+    fetchArticles();
+  }, []);
   return (
     <div className="flex gap-5 py-10">
       <div className="flex-[0.6] flex flex-col gap-10">
@@ -21,8 +29,8 @@ export default function Home() {
               })
             ) : (
               <div className="flex flex-col gap-4">
-                <ArticleSkeleton />
-                <ArticleSkeleton />
+                <ArticleSkeletonLoader />
+                <ArticleSkeletonLoader />
               </div>
             )}
           </div>

@@ -21,7 +21,7 @@ export default function Navbar() {
       <div className="flex w-1/2 gap-[4rem] justify-center">
         <Link title={"Home"} path={"/"} />
         <Link title={"Create"} path={"/create"} />
-        <Link title={"EcoAlert"} path={"/alert"} />
+        <Link title={"EcoAlert"} path={"/alert/posts"} />
         <Link title={"EcoNews"} path={"/news"} />
         <Link title={"About"} path={"/about"} />
       </div>

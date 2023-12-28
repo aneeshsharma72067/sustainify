@@ -17,9 +17,30 @@
   --light-color: #ececec;
   --dark-color: #222;
 }
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/Poppins-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("/public/fonts/Poppins-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("/public/fonts/Poppins-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
 body {
   background: var(--light-color);
   color: var(--dark-color);
+  font-family: "Poppins";
 }
 
 ::-webkit-scrollbar {
