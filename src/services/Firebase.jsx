@@ -64,4 +64,14 @@ const getPosts = async () => {
   return postList;
 };
 
-export { addArticle, getArticles, addAlertPost, getPosts };
+const signup = async (formData) => {
+  const result = await addDoc(collection(firestore, "users"), {
+    ...formData,
+    bio: "",
+    popularity: 0,
+    joinedOn: serverTimestamp(),
+  });
+  return result;
+};
+
+export { addArticle, getArticles, addAlertPost, getPosts, signup };

@@ -1,16 +1,6 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
-
-function Link({ path, title }) {
-  const location = useLocation();
-  const isActive = location.pathname === path;
-  const className = `navbar__link ${isActive && "active__navbar__link"}`;
-  return (
-    <a href={path} className={className}>
-      {title}
-    </a>
-  );
-}
+import { NavLink } from "react-router-dom";
+import Button from "./Button";
 
 export default function Navbar() {
   return (
@@ -19,20 +9,23 @@ export default function Navbar() {
         <a href="/">Sustainify</a>
       </div>
       <div className="flex w-1/2 gap-[4rem] justify-center">
-        <Link title={"Home"} path={"/"} />
-        <Link title={"Create"} path={"/create"} />
-        <Link title={"EcoAlert"} path={"/alert/posts"} />
-        <Link title={"EcoNews"} path={"/news"} />
-        <Link title={"About"} path={"/about"} />
+        <NavLink className="navbar__link" to="/">
+          Home
+        </NavLink>
+        <NavLink className="navbar__link" to="/create">
+          Create
+        </NavLink>
+        <NavLink className="navbar__link" to="/alert/posts">
+          EcoAlert
+        </NavLink>
+        <NavLink className="navbar__link" to="/news">
+          EcoNews
+        </NavLink>
+        <NavLink className="navbar__link" to="/about">
+          About
+        </NavLink>
       </div>
-      <div>
-        <a
-          href="/login"
-          className="text-white px-5 py-2 rounded-md font-bold bg-green-500 duration-300 border-2 border-transparent border-green-500 hover:bg-transparent hover:border-green-500 hover:text-green-500"
-        >
-          Login
-        </a>
-      </div>
+      <Button type={"link"} location={"/login"} title={"Login"} />
     </div>
   );
 }

@@ -31,4 +31,8 @@ function timeAgo(date) {
   } ago`;
 }
 
-export { timeAgo };
+const capitalizeWord = (str) => {
+  return str[0].toUpperCase() + str.slice(1);
+};
+
+export { timeAgo, capitalizeWord };

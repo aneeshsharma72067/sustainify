@@ -4,6 +4,7 @@ import EcoAlertPost from "../components/EcoAlertPost";
 import { useFirebase } from "../context/FirebaseContext";
 import { getPosts } from "../services/Firebase";
 import PostSkeletonLoader from "../components/PostSkeletonLoader";
+import { NavLink } from "react-router-dom";
 
 function EcoAlert() {
   const { posts, setPosts } = useFirebase();
@@ -32,15 +33,15 @@ function EcoAlert() {
         </div>
         <div className="w-full bg-green-300 rounded-xl py-10 border-dashed  border-2 border-green-500">
           <button className="flex items-center justify-center mx-auto">
-            <a
-              href="/alert/create"
+            <NavLink
+              to="/alert/create"
               className="flex items-center justify-center px-5 py-2 bg-green-500 rounded-lg gap-3 hover:bg-green-700 duration-300"
             >
               <span>
                 <AddCircleIcon size={40} />
               </span>
               <span className="text-white font-medium">Add a post</span>
-            </a>
+            </NavLink>
           </button>
         </div>
         <div className="flex flex-col gap-6 w-full">

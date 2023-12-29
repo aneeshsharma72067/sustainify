@@ -41,6 +41,7 @@ body {
   background: var(--light-color);
   color: var(--dark-color);
   font-family: "Poppins";
+  min-height: 110vh;
 }
 
 ::-webkit-scrollbar {
@@ -64,11 +65,11 @@ a {
 }
 
 .navbar__link {
-  @apply duration-300 relative hover:text-green-400 after:content-[''] after:absolute after:w-2 after:h-2 after:rounded-full after:bg-green-400 after:-bottom-2 after:left-1/2 after:duration-300 after:opacity-0;
+  @apply duration-300 relative hover:text-green-400 after:content-[''] after:absolute after:w-2 after:h-2 after:rounded-full after:bg-green-400 after:-bottom-2 after:left-1/2 after:duration-300 after:scale-0;
 }
 
-.active__navbar__link {
-  @apply after:opacity-100;
+.navbar__link.active {
+  @apply after:scale-100;
 }
 
 .category_list_item {
@@ -150,4 +151,16 @@ a {
 .neuromorphism {
   background: #ffffff;
   box-shadow: 11px 11px 22px #c9c9c9, -11px -11px 22px #ffffff;
+}
+.custom_link.active > div {
+  @apply translate-x-full;
+}
+.custom_link.active > p {
+  @apply text-white;
+}
+.login-form:hover {
+  transform: rotateY(180deg);
+}
+.authForm::before {
+  transform-origin: top center;
 }
