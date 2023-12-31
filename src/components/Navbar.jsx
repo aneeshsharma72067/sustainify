@@ -1,12 +1,17 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import Button from "./Button";
+import { useFirebase } from "../context/FirebaseContext";
 
 export default function Navbar() {
+  const { user } = useFirebase();
+  const logout = () => {
+    console.log("user wants to log out !!");
+  };
   return (
     <div className="flex my-4 items-center justify-between">
       <div>
-        <a href="/">Sustainify</a>
+        <NavLink to="/">Sustainify</NavLink>
       </div>
       <div className="flex w-1/2 gap-[4rem] justify-center">
         <NavLink className="navbar__link" to="/">
@@ -25,7 +30,25 @@ export default function Navbar() {
           About
         </NavLink>
       </div>
-      <Button type={"link"} location={"/login"} title={"Login"} />
+      {user ? (
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            <NavLink
+              to={`/users/${user.user_id}`}
+              className="w-10 h-10 rounded-full bg-green-400"
+            ></NavLink>
+            <NavLink
+              to={`/users/${user.user_id}`}
+              className="font-medium text-slate-50 bg-green-300 py-3 px-4 duration-300 hover:bg-teal-400"
+            >
+              @{user.username}
+            </NavLink>
+          </div>
+          <Button type="logout" onclick={logout} title={"Logout"} />
+        </div>
+      ) : (
+        <Button type={"link"} location={"/login"} title={"Login"} />
+      )}
     </div>
   );
 }

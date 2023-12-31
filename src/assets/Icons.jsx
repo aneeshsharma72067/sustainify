@@ -65,3 +65,26 @@ export const ImageIcon = ({ size = 240, color = "#ffffff", ...props }) => (
     <path d="m10.5 20.253 5.782-5.781a1.5 1.5 0 0 1 2.02-.094l3.448 2.875" />
   </svg>
 );
+
+export const CloseIcon = ({
+  size = 240,
+  strokeWidth = 1.5,
+  color = "#ffffff",
+  ...props
+}) => (
+  <svg
+    width={size}
+    height={size}
+    fill="none"
+    stroke={color}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth={strokeWidth}
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <path d="M17.25 17.25 6.75 6.75" />
+    <path d="m17.25 6.75-10.5 10.5" />
+  </svg>
+);

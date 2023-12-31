@@ -9,6 +9,17 @@ function Button({
   location,
   className,
 }) {
+  if (type === "logout") {
+    return (
+      <button
+        onClick={onclick}
+        className={`custom_link relative group hover:text-white overflow-hidden border-2 border-green-400 px-6 py-3 ${className}`}
+      >
+        <div className="z-0 absolute group-hover:translate-x-full duration-500 top-0 -left-full w-full h-full bg-green-400"></div>
+        <p className="z-10 relative duration-300">{title}</p>
+      </button>
+    );
+  }
   if (type === "link") {
     return (
       <NavLink

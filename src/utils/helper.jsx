@@ -1,6 +1,5 @@
 function timeAgo(date) {
   const seconds = Math.floor((new Date() - date) / 1000);
-  console.log(Math.floor(seconds / 3600));
   let interval = seconds / 31536000;
   if (interval >= 1) {
     return `${Math.round(interval)} years ago`;

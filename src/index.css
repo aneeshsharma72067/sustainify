@@ -76,7 +76,7 @@ a {
   @apply bg-white text-slate-800 py-2 px-5 w-full duration-300 hover:bg-zinc-300 cursor-pointer select-none;
 }
 
-.loader {
+.spinner.loader {
   width: 70px;
   aspect-ratio: 1;
   display: grid;
@@ -85,8 +85,8 @@ a {
   border-right-color: #25b09b;
   animation: l15 1s infinite linear;
 }
-.loader::before,
-.loader::after {
+.spinner.loader::before,
+.spinner.loader::after {
   content: "";
   grid-area: 1/1;
   margin: 2px;
@@ -94,7 +94,7 @@ a {
   border-radius: 50%;
   animation: l15 2s infinite;
 }
-.loader::after {
+.spinner.loader::after {
   margin: 8px;
   animation-duration: 3s;
 }
@@ -163,4 +163,148 @@ a {
 }
 .authForm::before {
   transform-origin: top center;
+}
+@keyframes square-animation {
+  0% {
+    left: 0;
+    top: 0;
+  }
+
+  10.5% {
+    left: 0;
+    top: 0;
+  }
+
+  12.5% {
+    left: 32px;
+    top: 0;
+  }
+
+  23% {
+    left: 32px;
+    top: 0;
+  }
+
+  25% {
+    left: 64px;
+    top: 0;
+  }
+
+  35.5% {
+    left: 64px;
+    top: 0;
+  }
+
+  37.5% {
+    left: 64px;
+    top: 32px;
+  }
+
+  48% {
+    left: 64px;
+    top: 32px;
+  }
+
+  50% {
+    left: 32px;
+    top: 32px;
+  }
+
+  60.5% {
+    left: 32px;
+    top: 32px;
+  }
+
+  62.5% {
+    left: 32px;
+    top: 64px;
+  }
+
+  73% {
+    left: 32px;
+    top: 64px;
+  }
+
+  75% {
+    left: 0;
+    top: 64px;
+  }
+
+  85.5% {
+    left: 0;
+    top: 64px;
+  }
+
+  87.5% {
+    left: 0;
+    top: 32px;
+  }
+
+  98% {
+    left: 0;
+    top: 32px;
+  }
+
+  100% {
+    left: 0;
+    top: 0;
+  }
+}
+
+#screen-loader > .loader {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  transform: rotate(45deg);
+}
+
+#screen-loader .loader-square {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  margin: 2px;
+  border-radius: 0px;
+  background: #0bcf6d;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  animation: square-animation 10s ease-in-out infinite both;
+}
+
+#screen-loader .loader-square:nth-of-type(0) {
+  animation-delay: 0s;
+}
+
+#screen-loader .loader-square:nth-of-type(1) {
+  animation-delay: -1.4285714286s;
+}
+
+#screen-loader .loader-square:nth-of-type(2) {
+  animation-delay: -2.8571428571s;
+}
+
+#screen-loader .loader-square:nth-of-type(3) {
+  animation-delay: -4.2857142857s;
+}
+
+#screen-loader .loader-square:nth-of-type(4) {
+  animation-delay: -5.7142857143s;
+}
+
+#screen-loader .loader-square:nth-of-type(5) {
+  animation-delay: -7.1428571429s;
+}
+
+#screen-loader .loader-square:nth-of-type(6) {
+  animation-delay: -8.5714285714s;
+}
+
+#screen-loader .loader-square:nth-of-type(7) {
+  animation-delay: -10s;
+}
+
+.isLoading {
+  overflow: hidden;
 }

@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import Button from "../components/Button";
 import { capitalizeWord } from "../utils/helper";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Toast from "../components/Toast";
 import Loader from "../components/Loader";
-import { signup } from "../services/Firebase";
+import { login, signup } from "../services/Firebase";
 import { useFirebase } from "../context/FirebaseContext";
 
 export default function Login() {
+  // useHooks
   const firebase = useFirebase();
+  const location = useLocation();
+  const navigate = useNavigate();
+
   if (firebase.user) {
     console.log(firebase.user);
   }
-  const location = useLocation();
   const signUpFirst = location.state && location.state.signUpFirst;
   const [activeForm, setActiveForm] = useState(
     signUpFirst ? "signup" : "login"
@@ -23,6 +26,7 @@ export default function Login() {
     message: null,
     status: null,
   });
+  const [timeoutId, setTimeoutId] = useState(null);
   const [signUpFormData, setSignUpFormData] = useState({
     username: "",
     fullname: "",
@@ -36,9 +40,22 @@ export default function Login() {
   });
   const showTost = (message, status) => {
     setToast({ message: message, status: status, isActive: true });
-    setTimeout(() => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    const newTimeoutId = setTimeout(() => {
       setToast({ message: null, status: null, isActive: false });
+      console.log("toast closed");
     }, 3000);
+    setTimeoutId(newTimeoutId);
+    console.log("after toast close");
+  };
+  const closeToast = () => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    setToast({ message: null, status: null, isActive: false });
+    console.log("toast closed manually");
   };
   const resetForm = () => {
     setSignUpFormData({ username: "", fullname: "", email: "", password: "" });
@@ -50,20 +67,51 @@ export default function Login() {
   const onLoginDataChange = (e) => {
     setLoginFormData({ ...loginFormData, [e.target.name]: e.target.value });
   };
-  const handleLogin = () => {
-    console.log(loginFormData);
+  const handleLogin = async () => {
+    setIsLoading(true);
+    try {
+      if (!loginFormData.email) {
+        throw new Error("Email can not be Blank !!");
+      }
+      if (!loginFormData.password) {
+        throw new Error("Password can not be Blank !!");
+      }
+      const result = await login(loginFormData);
+      if (result) {
+        console.log(result);
+        firebase.setUser(result);
+        resetForm();
+        navigate("/");
+      }
+    } catch (err) {
+      console.log(err);
+      showTost(err.message, "error");
+    }
+    setIsLoading(false);
   };
+
   const handleSignup = async () => {
     setIsLoading(true);
     try {
+      if (!signUpFormData.fullname) {
+        throw new Error("Name can not be Blank !!");
+      }
+      if (!signUpFormData.username) {
+        throw new Error("Username can not be Blank !!");
+      }
+      if (!signUpFormData.email) {
+        throw new Error("Email can not be Blank !!");
+      }
+      if (!signUpFormData.password) {
+        throw new Error("Password can not be Blank !!");
+      }
       const result = await signup(signUpFormData);
       if (result) {
         showTost("Signup Successfull ✅", "success");
         resetForm();
       }
     } catch (err) {
-      console.log(err);
-      showTost("Something Went Wrong !!", "error");
+      showTost(err.message, "error");
     }
     setIsLoading(false);
   };
@@ -72,7 +120,11 @@ export default function Login() {
     <div className="relative w-full min-w-min h-[100vh] py-10 ">
       {isLoading && <Loader />}
       {toast.isActive && (
-        <Toast message={toast.message} status={toast.status} />
+        <Toast
+          message={toast.message}
+          status={toast.status}
+          onclick={closeToast}
+        />
       )}
       <div
         className={`absolute w-32 duration-700 h-32 rounded-full bg-gradient-to-r from-green-500 to-green-300  ${

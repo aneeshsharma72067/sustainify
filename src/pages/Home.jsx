@@ -6,7 +6,7 @@ import ArticleSkeletonLoader from "../components/ArticleSkeletonLoader";
 import { getArticles } from "../services/Firebase";
 
 export default function Home() {
-  const { articles, setArticles } = useFirebase();
+  const { articles, setArticles, user } = useFirebase();
   useEffect(() => {
     const fetchArticles = async () => {
       const articleList = await getArticles();
