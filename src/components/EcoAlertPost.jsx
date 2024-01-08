@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { timeAgo } from "../utils/helper";
+import { FlagIcon, LikeIcon } from "../assets/Icons";
 
 function EcoAlertPost({ post }) {
   const [imageIsLoading, setImageIsLoading] = useState(true);
@@ -18,7 +19,7 @@ function EcoAlertPost({ post }) {
         <span className=" text-green-500">{post.username}</span>
       </div>
       <div className="w-full flex items-stretch gap-5">
-        <div className="flex-1 flex items-center justify-center">
+        <div className="flex-1 flex bg-green-200 items-center justify-center">
           {!imageIsLoading ? (
             <img
               src={post.imageURL}
@@ -39,6 +40,31 @@ function EcoAlertPost({ post }) {
           <div className="text-slate-500 text-sm font-medium">
             {timeAgo(post.createdAt.toDate())}
           </div>
+        </div>
+      </div>
+      <div className="px-4 py-3 border-2 border-green-300 rounded-md gap-10 flex items-center ">
+        <div className="flex items-center gap-1 justify-center">
+          <button className="duration-300 group">
+            <LikeIcon
+              size={25}
+              color="#3ade55"
+              strokeWidth={1.5}
+              className="group-hover:fill-green-400 duration-300"
+            />
+          </button>
+          {post.likes > 0 && (
+            <span className="text-green-500">{post.likes}</span>
+          )}
+        </div>
+        <div className="flex items-center justify-center">
+          <button className="duration-300 group">
+            <FlagIcon
+              size={25}
+              strokeWidth={1.5}
+              color="#3ade55"
+              className="group-hover:fill-green-400 duration-300"
+            />
+          </button>
         </div>
       </div>
     </div>

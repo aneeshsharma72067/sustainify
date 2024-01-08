@@ -16,6 +16,7 @@ import {
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import { v4 as uuid4 } from "uuid";
 import { compareSync, hash, hashSync } from "bcryptjs";
@@ -63,6 +64,7 @@ const addAlertPost = async (userID, username, image, caption) => {
     imageURL: imageURL,
     caption: caption,
     createdAt: serverTimestamp(),
+    likes: 0,
   });
   return result;
 };
@@ -178,6 +180,16 @@ const checkIfUserLoggedIn = () => {
   });
 };
 
+const logout = async () => {
+  await signOut(firebaseAuth)
+    .then((res) => {
+      console.log(res, "logged out");
+    })
+    .catch((err) => {
+      console.log(err, "cant log out");
+    });
+};
+
 export {
   addArticle,
   getArticles,
@@ -187,4 +199,5 @@ export {
   login,
   getUserData,
   checkIfUserLoggedIn,
+  logout,
 };

@@ -1,15 +1,29 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import Button from "./Button";
 import { useFirebase } from "../context/FirebaseContext";
+import { checkIfUserLoggedIn, logout } from "../services/Firebase";
+import Loader from "./Loader";
 
 export default function Navbar() {
-  const { user } = useFirebase();
-  const logout = () => {
-    console.log("user wants to log out !!");
+  const { user, setUser } = useFirebase();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const logoutHandle = async () => {
+    setIsLoading(true);
+    try {
+      await logout();
+      setUser(null);
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
+    setIsLoading(false);
   };
   return (
     <div className="flex my-4 items-center justify-between">
+      {isLoading && <Loader />}
+
       <div>
         <NavLink to="/">Sustainify</NavLink>
       </div>
@@ -44,7 +58,7 @@ export default function Navbar() {
               @{user.username}
             </NavLink>
           </div>
-          <Button type="logout" onclick={logout} title={"Logout"} />
+          <Button type="logout" onclick={logoutHandle} title={"Logout"} />
         </div>
       ) : (
         <Button type={"link"} location={"/login"} title={"Login"} />

@@ -88,3 +88,49 @@ export const CloseIcon = ({
     <path d="m17.25 6.75-10.5 10.5" />
   </svg>
 );
+
+export const LikeIcon = ({
+  size = 46,
+  strokeWidth = 1,
+  color = "currentColor",
+  fill = "none",
+  ...props
+}) => (
+  <svg
+    width={size}
+    height={size}
+    fill={fill}
+    stroke={color}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth={strokeWidth}
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <path d="M16.472 20H4.1a.6.6 0 0 1-.6-.6V9.6a.6.6 0 0 1 .6-.6h2.768a2 2 0 0 0 1.715-.972l2.71-4.517a1.631 1.631 0 0 1 2.961 1.308l-1.022 3.408a.6.6 0 0 0 .574.772h4.575a2 2 0 0 1 1.93 2.526l-1.91 7A2 2 0 0 1 16.473 20Z" />
+    <path d="M7 20V9" />
+  </svg>
+);
+
+export const FlagIcon = ({
+  size = 240,
+  strokeWidth = 1,
+  color = "#ffffff",
+  fill = "none",
+  ...props
+}) => (
+  <svg
+    width={size}
+    height={size}
+    fill={fill}
+    stroke={color}
+    strokeLinecap="round"
+    strokeWidth={strokeWidth}
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <path d="M3.75 21.75V3.194a.375.375 0 0 1 .188-.323c.366-.215 1.355-.621 3.562-.621 3 0 6.797 2.25 9 2.25a9.353 9.353 0 0 0 3.62-.74.093.093 0 0 1 .13.088V14.13a.187.187 0 0 1-.112.171c-.386.17-1.748.699-3.638.699-2.25 0-6-1.5-9-1.5s-3.75.75-3.75.75" />
+  </svg>
+);
