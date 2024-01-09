@@ -16,6 +16,7 @@ function PostSkeletonLoader() {
           <div className="bg-gradient-to-r w-full h-5 from-zinc-400 rounded-sm to-zinc-100 animate-pulse"></div>
         </div>
       </div>
+      <div className="bg-gradient-to-r w-full h-12 from-zinc-400 rounded-sm to-zinc-100 animate-pulse"></div>
     </div>
   );
 }

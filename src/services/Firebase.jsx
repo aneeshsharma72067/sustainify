@@ -1,13 +1,17 @@
 import { initializeApp } from "firebase/app";
 import {
   addDoc,
+  and,
   collection,
+  deleteDoc,
+  doc,
   getDoc,
   getDocs,
   getFirestore,
   or,
   query,
   serverTimestamp,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
@@ -72,6 +76,7 @@ const addAlertPost = async (userID, username, image, caption) => {
 const getPosts = async () => {
   const postsSnapshot = await getDocs(collection(firestore, "posts"));
   const postList = [];
+
   postsSnapshot.forEach((post) => {
     postList.push({ id: post.id, ...post.data() });
   });
@@ -190,6 +195,76 @@ const logout = async () => {
     });
 };
 
+const likePost = async (userID, postID) => {
+  console.log(userID, postID);
+  const likeSnapShot = await getDocs(
+    query(
+      collection(firestore, "post_likes"),
+      and(where("postID", "==", postID), where("userID", "==", userID))
+    )
+  );
+  if (likeSnapShot.docs.length !== 0) {
+    throw new Error("post already liked");
+  }
+  const result = await addDoc(collection(firestore, "post_likes"), {
+    userID: userID,
+    postID: postID,
+    likedAt: serverTimestamp(),
+  });
+
+  if (!result) {
+    throw new Error("Something went wrong !!");
+  }
+  const currentData = await getDoc(doc(firestore, "posts", postID));
+  try {
+    await updateDoc(doc(firestore, "posts", postID), {
+      likes: currentData.data().likes + 1,
+    });
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+const getlikedPosts = async (userID) => {
+  const collectionRef = collection(firestore, "post_likes");
+  try {
+    const likedPostsSnapShot = await getDocs(
+      query(collectionRef, where("userID", "==", userID))
+    );
+    const likedPosts = [];
+    likedPostsSnapShot.forEach((post) => {
+      likedPosts.push(post.data().postID);
+    });
+    return likedPosts;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};
+
+const unlikePost = async (userID, postID) => {
+  const docRef = await getDocs(
+    query(
+      collection(firestore, "post_likes"),
+      and(where("postID", "==", postID), where("userID", "==", userID))
+    )
+  );
+  if (docRef.empty) {
+    throw new Error("post is not liked");
+  }
+  const deletedPost = await deleteDoc(
+    doc(firestore, "post_likes", docRef.docs[0].id)
+  );
+  const currentData = await getDoc(doc(firestore, "posts", postID));
+  try {
+    await updateDoc(doc(firestore, "posts", postID), {
+      likes: Math.max(currentData.data().likes - 1, 0),
+    });
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
 export {
   addArticle,
   getArticles,
@@ -200,4 +275,7 @@ export {
   getUserData,
   checkIfUserLoggedIn,
   logout,
+  likePost,
+  getlikedPosts,
+  unlikePost,
 };

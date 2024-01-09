@@ -4,8 +4,10 @@ import { addAlertPost } from "../services/Firebase";
 import Toast from "../components/Toast";
 import Loader from "../components/Loader";
 import Button from "../components/Button";
+import { useFirebase } from "../context/FirebaseContext";
 
 function CreateAlertPost() {
+  const { user } = useFirebase();
   const [image, setImage] = useState(null);
   const [imageURL, setImageURL] = useState(null);
   const [caption, setCaption] = useState("");
@@ -35,7 +37,12 @@ function CreateAlertPost() {
   const postSubmitHandle = async () => {
     setIsLoading(true);
     try {
-      const result = await addAlertPost("1", "john123", image, caption);
+      const result = await addAlertPost(
+        user.user_id,
+        user.username,
+        image,
+        caption
+      );
       if (result) {
         showTost("Post Added Successfully", "success");
         setCaption("");
@@ -49,7 +56,9 @@ function CreateAlertPost() {
       setIsLoading(false);
     }
   };
-
+  if (!user) {
+    return <div>Login First</div>;
+  }
   return (
     <div className="py-5">
       {isLoading && <Loader />}
@@ -68,6 +77,7 @@ function CreateAlertPost() {
               onChange={handleFileChange}
               accept=".jpg, .png, .jpeg"
             />
+
             <label
               htmlFor="alert-image"
               className="flex flex-col py-10 items-center justify-center border-4 border-dashed border-green-500 bg-green-200 rounded-xl cursor-pointer gap-5"

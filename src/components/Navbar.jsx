@@ -31,10 +31,10 @@ export default function Navbar() {
         <NavLink className="navbar__link" to="/">
           Home
         </NavLink>
-        <NavLink className="navbar__link" to="/create">
-          Create
+        <NavLink className="navbar__link" to="/article">
+          Articles
         </NavLink>
-        <NavLink className="navbar__link" to="/alert/posts">
+        <NavLink className="navbar__link" to="/alert">
           EcoAlert
         </NavLink>
         <NavLink className="navbar__link" to="/news">

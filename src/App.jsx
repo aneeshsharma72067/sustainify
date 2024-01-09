@@ -13,6 +13,7 @@ import CreateArticle from "./pages/CreateArticle.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import ScreenLoader from "./components/ScreenLoader.jsx";
 import { useFirebase } from "./context/FirebaseContext.jsx";
+import Articles from "./pages/Articles.jsx";
 
 export default function App() {
   const { screenIsLoading } = useFirebase();
@@ -23,17 +24,20 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/users/:id" element={<UserProfile />} />
-        <Route path="/create" element={<CreateArticle />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route
           path="/signup"
           element={<Navigate to={"/login"} state={{ signUpFirst: true }} />}
         />
-        <Route path="/alert/posts" element={<EcoAlert />} />
-        <Route path="/news" element={<EcoNews />} />
+
+        <Route path="/article/create" element={<CreateArticle />} />
+        <Route path="/article" element={<Articles />} />
+
+        <Route path="/alert" element={<EcoAlert />} />
         <Route path="/alert/create" element={<CreateAlertPost />} />
         <Route path="/alert/post/:alertPostID" element={<AlertPostDetails />} />
+        <Route path="/news" element={<EcoNews />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

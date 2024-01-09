@@ -1,21 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AddCircleIcon } from "../assets/Icons";
 import EcoAlertPost from "../components/EcoAlertPost";
 import { useFirebase } from "../context/FirebaseContext";
-import { getPosts } from "../services/Firebase";
+import { getPosts, getlikedPosts } from "../services/Firebase";
 import PostSkeletonLoader from "../components/PostSkeletonLoader";
 import { NavLink } from "react-router-dom";
 
 function EcoAlert() {
-  const { posts, setPosts } = useFirebase();
+  const { user, posts, setPosts } = useFirebase();
+  const [likedPosts, setLikedPosts] = useState([]);
+  const [postsAreLoaded, setPostsAreLoaded] = useState(false);
   useEffect(() => {
     const fetchPosts = async () => {
-      const articleList = await getPosts();
-      setPosts(articleList);
-      console.log(articleList);
+      const postList = await getPosts();
+      setPosts(postList);
+      if (user) {
+        const likedPostList = await getlikedPosts(user.user_id);
+        setLikedPosts(likedPostList);
+      } else {
+        console.log("no user and no likedpost");
+      }
+      setPostsAreLoaded(true);
     };
     fetchPosts();
-  }, []);
+  }, [user, setLikedPosts]);
   return (
     <div className="py-4">
       <div className="w-4/5 mx-auto flex flex-col gap-8">
@@ -46,18 +54,32 @@ function EcoAlert() {
         </div>
         <div className="flex flex-col gap-6 w-full">
           <h1 className="text-3xl font-medium text-slate-700">Recent Posts</h1>
-          <div className="flex flex-col gap-4 w-4/5 mx-auto">
-            {posts.length ? (
-              posts.map((post) => {
-                return <EcoAlertPost key={post.id} post={post} />;
-              })
-            ) : (
-              <div className="flex flex-col gap-4">
-                <PostSkeletonLoader />
-                <PostSkeletonLoader />
-              </div>
-            )}
-          </div>
+          {postsAreLoaded ? (
+            <div className="flex flex-col gap-4 w-4/5 mx-auto">
+              {posts.length ? (
+                posts.map((post) => {
+                  return (
+                    <EcoAlertPost
+                      key={post.id}
+                      post={post}
+                      isLiked={likedPosts.includes(post.id)}
+                      likedPost={likedPosts}
+                      setLikedPosts={setLikedPosts}
+                    />
+                  );
+                })
+              ) : (
+                <div className="text-center font-bold text-slate-700 text-4xl my-5">
+                  No Posts Available
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="w-4/5 mx-auto flex flex-col gap-4">
+              <PostSkeletonLoader />
+              <PostSkeletonLoader />
+            </div>
+          )}
         </div>
       </div>
     </div>

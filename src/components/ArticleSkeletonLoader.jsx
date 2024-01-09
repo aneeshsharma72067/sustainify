@@ -7,9 +7,9 @@ function ArticleSkeleton() {
         <span className="w-7 h-7 rounded-full bg-gradient-to-r from-zinc-400 to-zinc-100 animate-pulse"></span>
         <span className="h-7 w-28 rounded-md bg-gradient-to-r from-zinc-400 to-zinc-100 animate-pulse"></span>
       </div>
-      <div className="w-full h-7 rounded-md bg-gradient-to-r from-zinc-400 to-zinc-100 animate-pulse"></div>
-      <div className="w-full h-14 rounded-md bg-gradient-to-r from-gray-400 to-slate-100 animate-pulse"></div>
-      <div className="w-full h-5 rounded-md bg-gradient-to-r from-gray-400 to-slate-100 animate-pulse"></div>
+      <div className="w-full h-10 rounded-md bg-gradient-to-r from-zinc-400 to-zinc-100 animate-pulse"></div>
+      <div className="w-full h-16 rounded-md bg-gradient-to-r from-gray-400 to-slate-100 animate-pulse"></div>
+      <div className="w-1/3 h-5 rounded-md bg-gradient-to-r from-gray-400 to-slate-100 animate-pulse"></div>
 
       <div></div>
     </div>

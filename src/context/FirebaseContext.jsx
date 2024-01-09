@@ -13,7 +13,6 @@ export const FirebaseProvider = (props) => {
     const fetchUserData = async () => {
       try {
         const userExists = await checkIfUserLoggedIn();
-        console.log(userExists);
         if (userExists) {
           setUser(userExists);
         } else {
