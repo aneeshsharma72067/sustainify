@@ -9,14 +9,16 @@ import { addArticle } from "../services/Firebase";
 
 export default function CreateArticle() {
   const [isLoading, setIsLoading] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
   const [toast, setToast] = useState({
     isActive: false,
     message: null,
     status: null,
   });
+  const { user } = useFirebase();
   const [formData, setFormData] = useState({
-    userId: 1,
-    username: "john123",
+    userId: user ? user.user_id : null,
+    username: user ? user.username : "Anonymous",
     category: "",
     title: "",
     content: "",
@@ -31,15 +33,14 @@ export default function CreateArticle() {
     }, 3000);
   };
   const [isCategoryListActive, setIsCategoryListActive] = useState(false);
-  const firebase = useFirebase();
 
   const showCategoryList = () => {
     setIsCategoryListActive(!isCategoryListActive);
   };
   const resetArticle = () => {
     setFormData({
-      userId: 1,
-      username: "john123",
+      userId: user ? user.user_id : null,
+      username: user ? user.username : "Anonymous",
       category: "",
       title: "",
       content: "",
@@ -62,6 +63,9 @@ export default function CreateArticle() {
       showTost("Something Went Wrong !!", "error");
     }
   };
+  if (!user) {
+    return <div>No User</div>;
+  }
   return (
     <div className="">
       {isLoading && <Loader />}
@@ -132,13 +136,29 @@ export default function CreateArticle() {
             value={formData.content}
             onChange={(e) => {
               onValueChange(e.target.name, e.target.value);
+              if (formData.content.length < 100) {
+                setShowWarning(true);
+              } else {
+                setShowWarning(false);
+              }
             }}
             onFocus={() => {
               setIsCategoryListActive(false);
             }}
+            onBlur={() => {
+              if (formData.content.length < 100) {
+                setShowWarning(true);
+              } else {
+                setShowWarning(false);
+              }
+            }}
           ></textarea>
         </div>
-
+        {showWarning && (
+          <div className="text-base font-medium text-red-500">
+            Article content should have more than 100 characters
+          </div>
+        )}
         <Button
           disabled={
             formData.content.length < 100 ||

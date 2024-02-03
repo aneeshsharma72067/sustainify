@@ -17,9 +17,7 @@ function Articles() {
     };
     fetchArticles();
   }, []);
-  if (!user) {
-    return <div>Login First</div>;
-  }
+
   return (
     <div className="py-4">
       <div className="w-4/5 mx-auto flex flex-col gap-8">

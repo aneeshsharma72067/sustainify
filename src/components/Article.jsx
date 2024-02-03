@@ -1,13 +1,17 @@
 import React from "react";
 import { timeAgo } from "../utils/helper";
+import { NavLink } from "react-router-dom";
 
 function Article({ article }) {
   return (
     <div className="bg-white px-5 py-3 rounded-lg flex flex-col gap-4 text-slate-700">
-      <div className="flex gap-3 items-center">
+      <NavLink
+        to={`/users/${article.userId}`}
+        className="flex gap-3 items-center"
+      >
         <span className="w-7 h-7 rounded-full bg-green-400"></span>
-        <span>@john123</span>
-      </div>
+        <span>@{article.username}</span>
+      </NavLink>
       <div className="bg-green-400 text-white px-4 py-2 rounded-md">
         {article.title.length > 100
           ? article.title.slice(0, 100) + "..."

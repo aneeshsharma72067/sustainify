@@ -265,6 +265,28 @@ const unlikePost = async (userID, postID) => {
   }
 };
 
+const getPostData = async (id) => {
+  const docRef = doc(firestore, "posts", id);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    console.log(docSnap);
+    return docSnap.data();
+  } else {
+    console.log("No such document");
+  }
+};
+
+const deletePost = async (id) => {
+  const docRef = doc(firestore, "posts", id);
+  try {
+    await deleteDoc(docRef);
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
+
 export {
   addArticle,
   getArticles,
@@ -278,4 +300,6 @@ export {
   likePost,
   getlikedPosts,
   unlikePost,
+  getPostData,
+  deletePost,
 };

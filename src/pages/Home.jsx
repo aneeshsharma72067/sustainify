@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import UserGreet from "../components/UserGreet";
 import Article from "../components/Article";
 import { useFirebase } from "../context/FirebaseContext";
@@ -7,10 +7,12 @@ import { getArticles } from "../services/Firebase";
 
 export default function Home() {
   const { articles, setArticles, user } = useFirebase();
+  const [articlesAreLoaded, setArticlesAreLoaded] = useState(false);
   useEffect(() => {
     const fetchArticles = async () => {
       const articleList = await getArticles();
       setArticles(articleList);
+      setArticlesAreLoaded(true);
     };
     fetchArticles();
   }, []);
@@ -22,18 +24,24 @@ export default function Home() {
           <h1 className="text-3xl font-medium text-slate-700">
             Recent Articles
           </h1>
-          <div className="flex flex-col gap-4">
-            {articles.length ? (
-              articles.map((article) => {
-                return <Article article={article} key={article.id} />;
-              })
-            ) : (
+          {articlesAreLoaded ? (
+            articles.length ? (
               <div className="flex flex-col gap-4">
-                <ArticleSkeletonLoader />
-                <ArticleSkeletonLoader />
+                {articles.map((article) => {
+                  return <Article article={article} key={article.id} />;
+                })}
               </div>
-            )}
-          </div>
+            ) : (
+              <div className="text-slate-800 font-bold text-3xl my-10">
+                No Articles to show !!
+              </div>
+            )
+          ) : (
+            <div className="flex flex-col gap-4">
+              <ArticleSkeletonLoader />
+              <ArticleSkeletonLoader />
+            </div>
+          )}
         </div>
       </div>
       <div className="flex-[0.4]"></div>
