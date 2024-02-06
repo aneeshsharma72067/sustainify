@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { deletePost, getPostData } from "../services/Firebase";
 import { setDoc } from "firebase/firestore";
 import { DeleteIcon } from "../assets/Icons";
 import Loader from "../components/Loader";
+import { useFirebase } from "../context/FirebaseContext";
 
 function AlertPostDetails() {
   const params = useParams();
+  const { user } = useFirebase();
   const alertPostID = params.alertPostID;
   const [loaderActive, setLoaderActive] = useState(false);
   const [postHasLoaded, setPostHasLoaded] = useState(false);
@@ -46,12 +48,15 @@ function AlertPostDetails() {
               <span className="bg-green-400 rounded-full w-8 h-8"></span>
               <span className="text-lg">{postData.username}</span>
             </div>
-            <div
-              onClick={delelteAlertPost}
-              className="px-3 py-1 rounded-md bg-red-400 duration-300 hover:bg-red-600 cursor-pointer"
-            >
-              <DeleteIcon size={30} color="white" />
-            </div>
+
+            {user && user.user_id === postData.userID && (
+              <div
+                onClick={delelteAlertPost}
+                className="px-3 py-1 rounded-md bg-red-400 duration-300 hover:bg-red-600 cursor-pointer"
+              >
+                <DeleteIcon size={30} color="white" />
+              </div>
+            )}
           </div>
           <div>
             <img
