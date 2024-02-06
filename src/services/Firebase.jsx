@@ -308,6 +308,28 @@ const deleteArticle = async (id) => {
   }
 };
 
+const getArticlesByUser = async (id) => {
+  const articlesSnapshot = await getDocs(
+    query(collection(firestore, "articles"), where("userId", "==", id))
+  );
+  const articlesList = [];
+  articlesSnapshot.forEach((article) => {
+    articlesList.push({ id: article.id, ...article.data() });
+  });
+  return articlesList;
+};
+
+const getPostsByUser = async (id) => {
+  const postsSnapshot = await getDocs(
+    query(collection(firestore, "posts"), where("userID", "==", id))
+  );
+  const postList = [];
+  postsSnapshot.forEach((post) => {
+    postList.push({ id: post.id, ...post.data() });
+  });
+  return postList;
+};
+
 export {
   addArticle,
   getArticles,
@@ -325,4 +347,6 @@ export {
   fetchArticle,
   deletePost,
   deleteArticle,
+  getArticlesByUser,
+  getPostsByUser,
 };
