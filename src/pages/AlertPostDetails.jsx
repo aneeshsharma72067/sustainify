@@ -68,7 +68,19 @@ function AlertPostDetails() {
           <div className="text-left text-xl ">{postData.caption}</div>
         </div>
       ) : (
-        <div>Loading...</div>
+        <div className="flex flex-col w-1/2 mx-auto gap-4">
+          <div className="flex justify-between">
+            <div className="flex gap-4">
+              <span className="w-8 h-8 rounded-full bg-gradient-to-r from-slate-400 to-slate-300 animate-pulse"></span>
+              <span className="w-14 h-7 rounded-md bg-gradient-to-r from-slate-400 to-slate-300 animate-pulse"></span>
+            </div>
+            <div className="w-10 h-8 rounded-md bg-gradient-to-r from-slate-400 to-slate-300 animate-pulse"></div>
+          </div>
+          <div className="w-full h-[20rem] rounded-lg bg-gradient-to-r from-slate-400 to-slate-300 animate-pulse"></div>
+          <div className="w-full h-7 rounded-md bg-gradient-to-r from-slate-400 to-slate-300 animate-pulse"></div>
+          <div className="w-full h-7 rounded-md bg-gradient-to-r from-slate-400 to-slate-300 animate-pulse"></div>
+          <div className="w-3/5 h-7 rounded-md bg-gradient-to-r from-slate-400 to-slate-300 animate-pulse"></div>
+        </div>
       )}
     </div>
   );
