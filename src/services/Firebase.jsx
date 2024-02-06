@@ -276,8 +276,29 @@ const getPostData = async (id) => {
   }
 };
 
+const fetchArticle = async (id) => {
+  const docRef = doc(firestore, "articles", id);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    console.log("No such article");
+  }
+};
+
 const deletePost = async (id) => {
   const docRef = doc(firestore, "posts", id);
+  try {
+    await deleteDoc(docRef);
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
+
+const deleteArticle = async (id) => {
+  const docRef = doc(firestore, "articles", id);
   try {
     await deleteDoc(docRef);
     return true;
@@ -301,5 +322,7 @@ export {
   getlikedPosts,
   unlikePost,
   getPostData,
+  fetchArticle,
   deletePost,
+  deleteArticle,
 };
