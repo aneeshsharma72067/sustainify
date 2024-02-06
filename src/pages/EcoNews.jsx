@@ -30,8 +30,8 @@ function EcoNews() {
           <div>
             {newsList.articles.length ? (
               <div className="flex flex-col gap-4">
-                {newsList.articles.map((item) => {
-                  return <NewsCard news={item} key={item.id} />;
+                {newsList.articles.map((item, key) => {
+                  return <NewsCard news={item} key={key} />;
                 })}
               </div>
             ) : (
