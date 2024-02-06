@@ -4,6 +4,7 @@ import Button from "./Button";
 import { useFirebase } from "../context/FirebaseContext";
 import { checkIfUserLoggedIn, logout } from "../services/Firebase";
 import Loader from "./Loader";
+import Logo from "/public/images/logo.png";
 
 export default function Navbar() {
   const { user, setUser } = useFirebase();
@@ -25,7 +26,9 @@ export default function Navbar() {
       {isLoading && <Loader />}
 
       <div>
-        <NavLink to="/">Sustainify</NavLink>
+        <NavLink to="/">
+          <img src={Logo} alt="Not Found" className="w-2/5" />
+        </NavLink>
       </div>
       <div className="flex w-1/2 gap-[4rem] justify-center">
         <NavLink className="navbar__link" to="/">
