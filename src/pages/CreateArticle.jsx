@@ -53,6 +53,13 @@ export default function CreateArticle() {
       return;
     }
     try {
+      const htmlContent = formData.content.split("\n").map((line, index) => (
+        <React.Fragment key={index}>
+          {line}
+          <br />
+        </React.Fragment>
+      ));
+      setFormData({ ...formData, content: htmlContent });
       const result = await addArticle(formData);
       console.log(result);
       resetArticle();

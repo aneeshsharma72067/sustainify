@@ -86,7 +86,9 @@ function ArticleDetails() {
               </div>
             )}
           </div>
-          <div>{article.content}</div>
+          <pre style={{ whiteSpace: "pre-wrap", fontFamily: "inherit" }}>
+            {article.content}
+          </pre>
         </div>
       )}
     </div>

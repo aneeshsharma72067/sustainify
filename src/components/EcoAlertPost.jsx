@@ -72,8 +72,6 @@ function EcoAlertPost({ post, isLiked, setLikedPosts }) {
             {post.caption.length > 170
               ? post.caption.slice(0, 170) + "..."
               : post.caption}
-            <br />
-            {post.id}
           </p>
 
           <div className="text-slate-500 text-sm font-medium">

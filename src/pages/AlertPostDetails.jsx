@@ -42,7 +42,7 @@ function AlertPostDetails() {
     <div>
       {loaderActive && <Loader />}
       {postHasLoaded && postData ? (
-        <div className="flex flex-col gap-8 mx-auto w-max my-10 ">
+        <div className="flex w-1/2 flex-col gap-8 mx-auto my-10 ">
           <div className="flex justify-between">
             <div className="flex gap-3">
               <span className="bg-green-400 rounded-full w-8 h-8"></span>
@@ -58,14 +58,16 @@ function AlertPostDetails() {
               </div>
             )}
           </div>
-          <div>
+          <div className="w-full">
             <img
               src={postData.imageURL}
-              alt=""
-              className="rounded-lg border-4 w-[30rem] h-auto border-green-300"
+              alt="Not Found"
+              className="rounded-lg border-4 w-full h-auto border-green-300"
             />
           </div>
-          <div className="text-left text-xl ">{postData.caption}</div>
+          <pre style={{ whiteSpace: "pre-wrap", fontFamily: "inherit" }}>
+            {postData.caption}
+          </pre>
         </div>
       ) : (
         <div className="flex flex-col w-1/2 mx-auto gap-4">
