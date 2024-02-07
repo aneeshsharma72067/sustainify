@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { deleteArticle, fetchArticle } from "../services/Firebase";
 import { useFirebase } from "../context/FirebaseContext";
 import { DeleteIcon } from "../assets/Icons";
+import Loader from "../components/Loader";
 
 function ArticleDetails() {
   const { articleID } = useParams();
@@ -10,6 +11,7 @@ function ArticleDetails() {
   const [article, setArticle] = useState(null);
   const [articleloader, setArticleLoader] = useState(true);
   const [loader, setLoader] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     const getArticle = async () => {
       setArticleLoader(true);
@@ -25,15 +27,17 @@ function ArticleDetails() {
   const delelteThisArticle = async () => {
     setLoader(true);
     const res = await deleteArticle(articleID);
-    setLoader(false);
     if (res) {
-      navigate("/artice");
+      setLoader(false);
+      navigate("/article");
     } else {
+      setLoader(false);
       alert("Delete not successfull !!");
     }
   };
   return (
     <div className="w-3/5 mx-auto my-10">
+      {loader && <Loader />}
       {articleloader || !article ? (
         <div className="flex flex-col gap-5">
           <div className="rounded-lg h-14 w-full bg-gradient-to-r from-slate-400 to-slate-300 animate-pulse"></div>

@@ -46,11 +46,19 @@ function Articles() {
           </button>
         </div>
         {articlesAreLoaded ? (
-          <div className="flex flex-col gap-4">
-            {articles.map((article) => {
-              return <Article article={article} key={article.id} />;
-            })}
-          </div>
+          <>
+            {articles.length ? (
+              <div className="flex flex-col gap-4">
+                {articles.map((article) => {
+                  return <Article article={article} key={article.id} />;
+                })}
+              </div>
+            ) : (
+              <div className="text-slate-800 font-bold text-3xl my-10 text-center">
+                No Articles to show !!
+              </div>
+            )}
+          </>
         ) : (
           <div className="flex flex-col gap-4">
             <ArticleSkeletonLoader />

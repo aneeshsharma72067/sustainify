@@ -6,6 +6,7 @@ import Loader from "../components/Loader";
 import { categoryList } from "../constants/data";
 import Toast from "../components/Toast";
 import { addArticle } from "../services/Firebase";
+import { Navigate } from "react-router-dom";
 
 export default function CreateArticle() {
   const [isLoading, setIsLoading] = useState(false);
@@ -63,8 +64,9 @@ export default function CreateArticle() {
       showTost("Something Went Wrong !!", "error");
     }
   };
+
   if (!user) {
-    return <div>No User</div>;
+    return <Navigate to={"/login"} />;
   }
   return (
     <div className="">

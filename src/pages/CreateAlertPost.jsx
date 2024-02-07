@@ -5,6 +5,7 @@ import Toast from "../components/Toast";
 import Loader from "../components/Loader";
 import Button from "../components/Button";
 import { useFirebase } from "../context/FirebaseContext";
+import { Navigate } from "react-router-dom";
 
 function CreateAlertPost() {
   const { user } = useFirebase();
@@ -57,7 +58,7 @@ function CreateAlertPost() {
     }
   };
   if (!user) {
-    return <div>Login First</div>;
+    return <Navigate to={"/login"} />;
   }
   return (
     <div className="py-5">
