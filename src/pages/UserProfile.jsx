@@ -47,15 +47,7 @@ function UserProfile() {
       setArticles(null);
     };
   }, []);
-  // if (!userData) {
-  //   return (
-  //     <>
-  //       <div className="w-3/5 my-10 mx-auto text-4xl font-bold text-slate-700 text-center">
-  //         User Not Found !!
-  //       </div>
-  //     </>
-  //   );
-  // }
+
   return (
     <div className="w-4/5 mx-auto">
       <div className="w-4/5">

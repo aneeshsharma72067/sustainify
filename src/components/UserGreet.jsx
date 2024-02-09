@@ -9,9 +9,9 @@ function UserGreet() {
         })}
       </div>
       <div className="text-2xl text-center text-slate-800 font-medium w-4/5 mx-auto">
-        <span className="text-green-500 text-3xl">“</span>Lorem ipsum dolor sit
-        amet consectetur adipisicing elit. Rem ipsam corporis repellendus
-        facilis?<span className="text-green-500 text-3xl">”</span>
+        <span className="text-green-500 text-3xl">“</span>The Earth does not
+        belong to us: we belong to the Earth
+        <span className="text-green-500 text-3xl">”</span>
       </div>
     </div>
   );

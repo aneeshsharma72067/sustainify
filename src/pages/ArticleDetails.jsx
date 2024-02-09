@@ -4,6 +4,7 @@ import { deleteArticle, fetchArticle } from "../services/Firebase";
 import { useFirebase } from "../context/FirebaseContext";
 import { DeleteIcon } from "../assets/Icons";
 import Loader from "../components/Loader";
+import { timeAgo } from "../utils/helper";
 
 function ArticleDetails() {
   const { articleID } = useParams();
@@ -70,17 +71,27 @@ function ArticleDetails() {
             {article.title}
           </div>
           <div className="flex justify-between">
-            <NavLink
-              to={`/users/${article.userId}`}
-              className="flex gap-3 items-center"
-            >
-              <span className="w-7 h-7 rounded-full bg-green-400"></span>
-              <span>@{article.username}</span>
-            </NavLink>
+            <span className="flex flex-col items-end">
+              <NavLink
+                to={`/users/${article.userId}`}
+                className="flex gap-3 items-center"
+              >
+                <span className="w-7 h-7 rounded-full bg-green-400"></span>
+                <span>@{article.username}</span>
+              </NavLink>
+              <span className="font-medium text-sm text-slate-500">
+                {new Date(article.createdAt.toDate()).toLocaleDateString(
+                  "en-us",
+                  {
+                    dateStyle: "medium",
+                  }
+                )}
+              </span>
+            </span>
             {user && user.user_id === article.userId && (
               <div
                 onClick={delelteThisArticle}
-                className="px-3 py-1 rounded-md bg-red-400 duration-300 hover:bg-red-600 cursor-pointer"
+                className="px-3 py-1 rounded-md bg-red-400 duration-300 flex items-center justify-center hover:bg-red-600 cursor-pointer"
               >
                 <DeleteIcon size={30} color="white" />
               </div>
