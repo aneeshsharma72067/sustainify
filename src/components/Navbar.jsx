@@ -6,10 +6,19 @@ import { checkIfUserLoggedIn, logout } from "../services/Firebase";
 import Loader from "./Loader";
 import Logo from "/public/images/logo.png";
 
+/**
+ * Navbar component for the application.
+ * @returns {JSX.Element} The rendered Navbar component.
+ */
 export default function Navbar() {
   const { user, setUser } = useFirebase();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+
+  /**
+   * Handles the logout functionality.
+   * @returns {Promise<void>} A promise that resolves when the logout process is complete.
+   */
   const logoutHandle = async () => {
     setIsLoading(true);
     try {
@@ -21,6 +30,7 @@ export default function Navbar() {
     }
     setIsLoading(false);
   };
+
   return (
     <div className="flex my-4 items-center justify-between">
       {isLoading && <Loader />}

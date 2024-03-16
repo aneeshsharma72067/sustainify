@@ -1,3 +1,7 @@
+/**
+ * Renders a greeting message with the current date and a quote about the Earth.
+ * @returns {JSX.Element} The rendered UserGreet component.
+ */
 import React from "react";
 
 function UserGreet() {

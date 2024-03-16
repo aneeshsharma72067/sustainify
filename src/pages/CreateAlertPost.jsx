@@ -1,3 +1,11 @@
+/**
+ * Represents the CreateAlertPost component.
+ * This component allows users to create and submit alert posts.
+ *
+ * @component
+ * @example
+ * return <CreateAlertPost />;
+ */
 import React, { useEffect, useState } from "react";
 import { ImageIcon } from "../assets/Icons";
 import { addAlertPost } from "../services/Firebase";

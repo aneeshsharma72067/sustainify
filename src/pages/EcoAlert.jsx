@@ -6,11 +6,19 @@ import { getPosts, getlikedPosts } from "../services/Firebase";
 import PostSkeletonLoader from "../components/PostSkeletonLoader";
 import { NavLink } from "react-router-dom";
 
+/**
+ * Renders the EcoAlert page.
+ * This page displays recent posts related to eco-alerts and allows users to add new posts.
+ */
 function EcoAlert() {
   const { user, posts, setPosts } = useFirebase();
   const [likedPosts, setLikedPosts] = useState([]);
   const [postsAreLoaded, setPostsAreLoaded] = useState(false);
+
   useEffect(() => {
+    /**
+     * Fetches the posts and liked posts from Firebase.
+     */
     const fetchPosts = async () => {
       const postList = await getPosts();
       setPosts(postList);
@@ -22,8 +30,10 @@ function EcoAlert() {
       }
       setPostsAreLoaded(true);
     };
+
     fetchPosts();
   }, [user, setLikedPosts]);
+
   return (
     <div className="py-4">
       <div className="w-4/5 mx-auto flex flex-col gap-8">

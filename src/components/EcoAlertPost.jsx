@@ -1,3 +1,13 @@
+/**
+ * Represents a component for displaying an eco alert post.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {Object} props.post - The post object containing information about the post.
+ * @param {boolean} props.isLiked - Indicates whether the post is liked by the user.
+ * @param {Function} props.setLikedPosts - A function to update the list of liked posts.
+ * @returns {JSX.Element} - The JSX element representing the eco alert post.
+ */
 import React, { useEffect, useState } from "react";
 import { timeAgo } from "../utils/helper";
 import { FlagIcon, LikeIcon } from "../assets/Icons";

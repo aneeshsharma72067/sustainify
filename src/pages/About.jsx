@@ -1,3 +1,7 @@
+/**
+ * Renders the About page component.
+ * @returns {JSX.Element} The About page component.
+ */
 import React from "react";
 import { NavLink } from "react-router-dom";
 import Logo from "/public/images/logo.png";

@@ -6,6 +6,10 @@ import { DeleteIcon } from "../assets/Icons";
 import Loader from "../components/Loader";
 import { timeAgo } from "../utils/helper";
 
+/**
+ * Renders the details of an article.
+ * @returns {JSX.Element} The ArticleDetails component.
+ */
 function ArticleDetails() {
   const { articleID } = useParams();
   const { user } = useFirebase();
@@ -13,18 +17,30 @@ function ArticleDetails() {
   const [articleloader, setArticleLoader] = useState(true);
   const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
+    /**
+     * Fetches the article from the database.
+     * @returns {Promise<void>} A Promise that resolves when the article is fetched.
+     */
     const getArticle = async () => {
       setArticleLoader(true);
       const res = await fetchArticle(articleID);
       setArticle(res);
       setArticleLoader(false);
     };
+
     getArticle();
+
     return () => {
       setArticle(null);
     };
   }, []);
+
+  /**
+   * Deletes the current article.
+   * @returns {Promise<void>} A Promise that resolves when the article is deleted.
+   */
   const delelteThisArticle = async () => {
     setLoader(true);
     const res = await deleteArticle(articleID);
@@ -36,11 +52,13 @@ function ArticleDetails() {
       alert("Delete not successfull !!");
     }
   };
+
   return (
     <div className="w-3/5 mx-auto my-10">
       {loader && <Loader />}
       {articleloader || !article ? (
         <div className="flex flex-col gap-5">
+          {/* Placeholder skeleton UI */}
           <div className="rounded-lg h-14 w-full bg-gradient-to-r from-slate-400 to-slate-300 animate-pulse"></div>
           <div className="h-14 w-full flex justify-between">
             <div className="flex gap-3">
@@ -71,14 +89,17 @@ function ArticleDetails() {
             {article.title}
           </div>
           <div className="flex justify-between">
+            {/* User information */}
             <span className="flex flex-col items-end">
               <NavLink
                 to={`/users/${article.userId}`}
                 className="flex gap-3 items-center"
               >
+                {/* User avatar */}
                 <span className="w-7 h-7 rounded-full bg-green-400"></span>
                 <span>@{article.username}</span>
               </NavLink>
+              {/* Article creation date */}
               <span className="font-medium text-sm text-slate-500">
                 {new Date(article.createdAt.toDate()).toLocaleDateString(
                   "en-us",
@@ -88,6 +109,7 @@ function ArticleDetails() {
                 )}
               </span>
             </span>
+            {/* Delete button (visible to the article owner) */}
             {user && user.user_id === article.userId && (
               <div
                 onClick={delelteThisArticle}
@@ -97,6 +119,7 @@ function ArticleDetails() {
               </div>
             )}
           </div>
+          {/* Article content */}
           <pre style={{ whiteSpace: "pre-wrap", fontFamily: "inherit" }}>
             {article.content}
           </pre>

@@ -1,3 +1,8 @@
+/**
+ * Calculates the time elapsed since a given date and returns a string representation of the time ago.
+ * @param {Date} date - The date to calculate the time ago from.
+ * @returns {string} A string representation of the time ago.
+ */
 function timeAgo(date) {
   const seconds = Math.floor((new Date() - date) / 1000);
   let interval = seconds / 31536000;
@@ -30,6 +35,11 @@ function timeAgo(date) {
   } ago`;
 }
 
+/**
+ * Capitalizes the first letter of a given word.
+ * @param {string} str - The word to capitalize.
+ * @returns {string} The capitalized word.
+ */
 const capitalizeWord = (str) => {
   return str[0].toUpperCase() + str.slice(1);
 };

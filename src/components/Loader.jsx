@@ -1,3 +1,9 @@
+/**
+ * Renders a loader component.
+ *
+ * @component
+ * @returns {JSX.Element} The loader component.
+ */
 import React from "react";
 
 function Loader() {

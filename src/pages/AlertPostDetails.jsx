@@ -1,3 +1,7 @@
+/**
+ * Renders the details of an alert post.
+ * @returns {JSX.Element} The rendered AlertPostDetails component.
+ */
 import React, { useEffect, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { deletePost, getPostData } from "../services/Firebase";

@@ -1,3 +1,7 @@
+/**
+ * Renders a skeleton loader for an article component.
+ * @returns {JSX.Element} The article skeleton loader component.
+ */
 import React from "react";
 
 function ArticleSkeleton() {

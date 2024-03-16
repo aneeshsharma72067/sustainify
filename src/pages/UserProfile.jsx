@@ -1,3 +1,7 @@
+/**
+ * Renders the user profile page.
+ * @returns {JSX.Element} The user profile page component.
+ */
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {

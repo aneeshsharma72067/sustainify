@@ -1,10 +1,21 @@
 import React from "react";
 import { timeAgo } from "../utils/helper";
 
+/**
+ * Renders a news card component.
+ * @param {Object} props - The component props.
+ * @param {Object} props.news - The news object containing information about the news article.
+ * @param {boolean} props.homepage - Indicates whether the news card is being rendered on the homepage.
+ * @returns {JSX.Element} The rendered news card component.
+ */
 function NewsCard({ news, homepage }) {
+  /**
+   * Handles the click event when the news card is clicked.
+   */
   const handleNewsClick = () => {
     window.open(news.url, "_blank");
   };
+
   return (
     <div
       onClick={handleNewsClick}

@@ -1,3 +1,7 @@
+/**
+ * Renders a skeleton loader for a post component.
+ * @returns {JSX.Element} The skeleton loader component.
+ */
 import React from "react";
 
 function PostSkeletonLoader() {

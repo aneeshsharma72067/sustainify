@@ -1,3 +1,9 @@
+/**
+ * The main component of the application.
+ * Renders the navigation bar and sets up the routing for different pages.
+ *
+ * @returns {JSX.Element} The rendered App component.
+ */
 import Home from "./pages/Home.jsx";
 import About from "./pages/About.jsx";
 import UserProfile from "./pages/UserProfile.jsx";

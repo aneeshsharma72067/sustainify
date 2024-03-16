@@ -6,15 +6,27 @@ import { getArticles } from "../services/Firebase";
 import Article from "../components/Article";
 import ArticleSkeletonLoader from "../components/ArticleSkeletonLoader";
 
+/**
+ * Renders the Articles page.
+ * 
+ * @returns {JSX.Element} The rendered Articles component.
+ */
 function Articles() {
   const { user, articles, setArticles } = useFirebase();
   const [articlesAreLoaded, setArticlesAreLoaded] = useState(false);
+
   useEffect(() => {
+    /**
+     * Fetches the articles from the Firebase database and updates the state.
+     * 
+     * @returns {Promise<void>} A Promise that resolves when the articles are fetched and the state is updated.
+     */
     const fetchArticles = async () => {
       const articleList = await getArticles();
       setArticles(articleList);
       setArticlesAreLoaded(true);
     };
+
     fetchArticles();
   }, []);
 
