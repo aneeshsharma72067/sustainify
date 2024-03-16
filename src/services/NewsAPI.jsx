@@ -9,6 +9,7 @@ const fetchNews = async (pageSize = 20) => {
   );
   const data = await res.json();
   console.log(data);
+
   return {
     articles: [],
   };
