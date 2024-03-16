@@ -1,3 +1,7 @@
+/**
+ * A component that displays a loading screen while waiting for data to load.
+ * @returns {JSX.Element} The ScreenLoader component.
+ */
 import React, { useEffect } from "react";
 import { useFirebase } from "../context/FirebaseContext";
 

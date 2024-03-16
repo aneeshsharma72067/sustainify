@@ -25,20 +25,50 @@ import {
 import { v4 as uuid4 } from "uuid";
 import { compareSync, hash, hashSync } from "bcryptjs";
 
+/**
+ * Firebase configuration object.
+ * @type {Object}
+ */
 const firebaseConfig = {
-  apiKey: "AIzaSyCeCiujs2TwwPw6GHBhsmA5NATqtzk_wqo",
-  authDomain: "sustainify-4ee8b.firebaseapp.com",
-  projectId: "sustainify-4ee8b",
-  storageBucket: "sustainify-4ee8b.appspot.com",
-  messagingSenderId: "1084970092267",
-  appId: "1:1084970092267:web:09da9473889c4c2dcaa0ae",
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID",
 };
+
 // Firebase Services
+
+/**
+ * Initialize the Firebase app.
+ * @type {Object}
+ */
 const firebaseApp = initializeApp(firebaseConfig);
+
+/**
+ * Get the Firestore instance.
+ * @type {Object}
+ */
 const firestore = getFirestore();
+
+/**
+ * Get the Firebase Storage instance.
+ * @type {Object}
+ */
 const storage = getStorage(firebaseApp);
+
+/**
+ * Get the Firebase Authentication instance.
+ * @type {Object}
+ */
 const firebaseAuth = getAuth(firebaseApp);
 
+/**
+ * Add an article to the Firestore collection.
+ * @param {Object} formData - The form data for the article.
+ * @returns {Promise} A promise that resolves with the result of adding the article.
+ */
 const addArticle = async (formData) => {
   const result = await addDoc(collection(firestore, "articles"), {
     ...formData,
@@ -48,6 +78,10 @@ const addArticle = async (formData) => {
   return result;
 };
 
+/**
+ * Get all articles from the Firestore collection.
+ * @returns {Promise} A promise that resolves with an array of articles.
+ */
 const getArticles = async () => {
   const articlesSnapshot = await getDocs(collection(firestore, "articles"));
   const articlesList = [];
@@ -57,6 +91,14 @@ const getArticles = async () => {
   return articlesList;
 };
 
+/**
+ * Add an alert post to the Firestore collection.
+ * @param {string} userID - The ID of the user creating the post.
+ * @param {string} username - The username of the user creating the post.
+ * @param {File} image - The image file for the post.
+ * @param {string} caption - The caption for the post.
+ * @returns {Promise} A promise that resolves with the result of adding the post.
+ */
 const addAlertPost = async (userID, username, image, caption) => {
   const storageRef = ref(storage, `post_images/${uuid4()}_${image.name}`);
   const imageSnapshot = await uploadBytes(storageRef, image);
@@ -73,6 +115,10 @@ const addAlertPost = async (userID, username, image, caption) => {
   return result;
 };
 
+/**
+ * Get all posts from the Firestore collection.
+ * @returns {Promise} A promise that resolves with an array of posts.
+ */
 const getPosts = async () => {
   const postsSnapshot = await getDocs(collection(firestore, "posts"));
   const postList = [];
@@ -83,6 +129,11 @@ const getPosts = async () => {
   return postList;
 };
 
+/**
+ * Sign up a new user.
+ * @param {Object} formData - The form data for the user.
+ * @returns {Promise} A promise that resolves with the result of signing up the user.
+ */
 const signup = async (formData) => {
   const { email, username, password } = formData;
   const existingEmail = await getDocs(
@@ -122,6 +173,11 @@ const signup = async (formData) => {
   return result;
 };
 
+/**
+ * Log in a user.
+ * @param {Object} formData - The form data for the user.
+ * @returns {Promise} A promise that resolves with the result of logging in the user.
+ */
 const login = async (formData) => {
   const { email, password } = formData;
 
@@ -156,6 +212,11 @@ const login = async (formData) => {
   return userData;
 };
 
+/**
+ * Get user data by ID.
+ * @param {string} id - The ID of the user.
+ * @returns {Promise} A promise that resolves with the user data.
+ */
 const getUserData = async (id) => {
   const userSnapshot = await getDocs(
     query(collection(firestore, "users"), where("user_id", "==", id))
@@ -167,6 +228,10 @@ const getUserData = async (id) => {
   return user;
 };
 
+/**
+ * Check if a user is logged in.
+ * @returns {Promise} A promise that resolves with the current user data if logged in, or null if not logged in.
+ */
 const checkIfUserLoggedIn = () => {
   return new Promise((resolve, reject) => {
     const unsubscribe = onAuthStateChanged(firebaseAuth, async (user) => {
@@ -185,6 +250,10 @@ const checkIfUserLoggedIn = () => {
   });
 };
 
+/**
+ * Log out the current user.
+ * @returns {Promise} A promise that resolves when the user is logged out.
+ */
 const logout = async () => {
   await signOut(firebaseAuth)
     .then((res) => {
@@ -195,6 +264,12 @@ const logout = async () => {
     });
 };
 
+/**
+ * Like a post.
+ * @param {string} userID - The ID of the user liking the post.
+ * @param {string} postID - The ID of the post to like.
+ * @returns {Promise} A promise that resolves with the result of liking the post.
+ */
 const likePost = async (userID, postID) => {
   console.log(userID, postID);
   const likeSnapShot = await getDocs(
@@ -225,6 +300,11 @@ const likePost = async (userID, postID) => {
   }
 };
 
+/**
+ * Get the IDs of posts liked by a user.
+ * @param {string} userID - The ID of the user.
+ * @returns {Promise} A promise that resolves with an array of post IDs.
+ */
 const getlikedPosts = async (userID) => {
   const collectionRef = collection(firestore, "post_likes");
   try {
@@ -242,6 +322,12 @@ const getlikedPosts = async (userID) => {
   }
 };
 
+/**
+ * Unlike a post.
+ * @param {string} userID - The ID of the user unliking the post.
+ * @param {string} postID - The ID of the post to unlike.
+ * @returns {Promise} A promise that resolves with the result of unliking the post.
+ */
 const unlikePost = async (userID, postID) => {
   const docRef = await getDocs(
     query(
@@ -265,6 +351,11 @@ const unlikePost = async (userID, postID) => {
   }
 };
 
+/**
+ * Get the data of a post by ID.
+ * @param {string} id - The ID of the post.
+ * @returns {Promise} A promise that resolves with the post data.
+ */
 const getPostData = async (id) => {
   const docRef = doc(firestore, "posts", id);
   const docSnap = await getDoc(docRef);
@@ -276,6 +367,11 @@ const getPostData = async (id) => {
   }
 };
 
+/**
+ * Fetch an article by ID.
+ * @param {string} id - The ID of the article.
+ * @returns {Promise} A promise that resolves with the article data.
+ */
 const fetchArticle = async (id) => {
   const docRef = doc(firestore, "articles", id);
   const docSnap = await getDoc(docRef);
@@ -286,6 +382,11 @@ const fetchArticle = async (id) => {
   }
 };
 
+/**
+ * Delete a post by ID.
+ * @param {string} id - The ID of the post to delete.
+ * @returns {Promise} A promise that resolves with a boolean indicating whether the post was deleted successfully.
+ */
 const deletePost = async (id) => {
   const docRef = doc(firestore, "posts", id);
   try {
@@ -297,6 +398,11 @@ const deletePost = async (id) => {
   }
 };
 
+/**
+ * Delete an article by ID.
+ * @param {string} id - The ID of the article to delete.
+ * @returns {Promise} A promise that resolves with a boolean indicating whether the article was deleted successfully.
+ */
 const deleteArticle = async (id) => {
   const docRef = doc(firestore, "articles", id);
   try {
@@ -308,6 +414,11 @@ const deleteArticle = async (id) => {
   }
 };
 
+/**
+ * Get articles by user ID.
+ * @param {string} id - The ID of the user.
+ * @returns {Promise} A promise that resolves with an array of articles.
+ */
 const getArticlesByUser = async (id) => {
   const articlesSnapshot = await getDocs(
     query(collection(firestore, "articles"), where("userId", "==", id))
@@ -319,6 +430,11 @@ const getArticlesByUser = async (id) => {
   return articlesList;
 };
 
+/**
+ * Get posts by user ID.
+ * @param {string} id - The ID of the user.
+ * @returns {Promise} A promise that resolves with an array of posts.
+ */
 const getPostsByUser = async (id) => {
   const postsSnapshot = await getDocs(
     query(collection(firestore, "posts"), where("userID", "==", id))

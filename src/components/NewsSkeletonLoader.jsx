@@ -1,3 +1,9 @@
+/**
+ * Renders a skeleton loader for news items.
+ * @param {Object} props - The component props.
+ * @param {boolean} props.homepage - Indicates whether the skeleton loader is being used on the homepage.
+ * @returns {JSX.Element} The rendered skeleton loader component.
+ */
 import React from "react";
 
 function NewsSkeletonLoader({ homepage }) {

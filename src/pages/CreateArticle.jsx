@@ -1,3 +1,8 @@
+/**
+ * Component for creating a new article.
+ *
+ * @returns {JSX.Element} The CreateArticle component.
+ */
 import React, { useState } from "react";
 import { DropDownIcon } from "../assets/Icons";
 import Button from "../components/Button";

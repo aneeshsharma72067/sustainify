@@ -1,3 +1,8 @@
+/**
+ * Home page component.
+ * 
+ * @returns {JSX.Element} The rendered Home component.
+ */
 import React, { useEffect, useState } from "react";
 import UserGreet from "../components/UserGreet";
 import Article from "../components/Article";

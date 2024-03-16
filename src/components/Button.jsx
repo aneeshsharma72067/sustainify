@@ -1,3 +1,16 @@
+/**
+ * Button component.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {boolean} [props.disabled=false] - Determines if the button is disabled.
+ * @param {string} props.title - The title of the button.
+ * @param {function} props.onclick - The click event handler for the button.
+ * @param {string} props.type - The type of the button.
+ * @param {string} props.location - The location for the NavLink button.
+ * @param {string} props.className - The CSS class name for the button.
+ * @returns {JSX.Element} The rendered Button component.
+ */
 import React from "react";
 import { NavLink } from "react-router-dom";
 

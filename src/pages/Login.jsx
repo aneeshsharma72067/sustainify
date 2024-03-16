@@ -1,3 +1,8 @@
+/**
+ * Login component for the application.
+ * 
+ * @returns {JSX.Element} The rendered Login component.
+ */
 import React, { useState } from "react";
 import Button from "../components/Button";
 import { capitalizeWord } from "../utils/helper";

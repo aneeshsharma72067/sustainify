@@ -1,6 +1,13 @@
+/**
+ * Renders an article component.
+ * @param {Object} props - The component props.
+ * @param {Object} props.article - The article object.
+ * @returns {JSX.Element} The rendered article component.
+ */
 import React from "react";
 import { timeAgo } from "../utils/helper";
 import { NavLink, useNavigate } from "react-router-dom";
+
 
 function Article({ article }) {
   const navigate = useNavigate();

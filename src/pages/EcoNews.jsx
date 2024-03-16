@@ -3,21 +3,33 @@ import { fetchNews } from "../services/NewsAPI";
 import NewsCard from "../components/NewsCard";
 import NewsSkeletonLoader from "../components/NewsSkeletonLoader";
 
+/**
+ * Renders the EcoNews page component.
+ * @returns {JSX.Element} The EcoNews page component.
+ */
 function EcoNews() {
   const [newsList, setNewsList] = useState(null);
   const [loader, setLoader] = useState(true);
+
   useEffect(() => {
+    /**
+     * Fetches the news data and updates the state.
+     * @returns {void}
+     */
     const getNews = async () => {
       setLoader(true);
       const res = await fetchNews();
       setNewsList(res);
       setLoader(false);
     };
+
     getNews();
+
     return () => {
       setNewsList(null);
     };
   }, []);
+
   return (
     <div>
       <div className="w-4/5 mx-auto my-5">
