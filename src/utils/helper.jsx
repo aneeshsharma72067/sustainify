@@ -30,7 +30,9 @@ function timeAgo(date) {
     return `${Math.round(interval)} minutes ago`;
   }
 
-  return `${Math.floor(seconds)} second${Math.floor(seconds) === 1 ? "" : "s"} ago`;
+  return `${Math.floor(seconds)} second${
+    Math.floor(seconds) === 1 ? "" : "s"
+  } ago`;
 }
 
 /**

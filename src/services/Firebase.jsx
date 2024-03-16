@@ -30,12 +30,12 @@ import { compareSync, hash, hashSync } from "bcryptjs";
  * @type {Object}
  */
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
+  apiKey: "AIzaSyCeCiujs2TwwPw6GHBhsmA5NATqtzk_wqo",
+  authDomain: "sustainify-4ee8b.firebaseapp.com",
+  projectId: "sustainify-4ee8b",
+  storageBucket: "sustainify-4ee8b.appspot.com",
+  messagingSenderId: "1084970092267",
+  appId: "1:1084970092267:web:09da9473889c4c2dcaa0ae",
 };
 
 // Firebase Services

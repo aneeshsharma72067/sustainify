@@ -1,6 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { checkIfUserLoggedIn } from "../services/Firebase";
 
+const FirebaseContext = createContext(null);
+
 /**
  * Context for Firebase operations.
  * @typedef {Object} FirebaseContextType
