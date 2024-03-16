@@ -4,7 +4,11 @@ const fetchNews = async (pageSize = 20) => {
   );
   const data = await res.json();
   console.log(data);
-  return data;
+
+  // not sending the fetched data as newsAPI free plan is not supported for production build !!
+  return {
+    articles: [],
+  };
 };
 
 export { fetchNews };
